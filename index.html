@@ -25,6 +25,7 @@
     --success: #16A34A;
     --success-dark: #15803D;
     --success-bg: #E7F6EC;
+    --photo-warm-a: #FFE9CF;
     --photo-warm-b: #FFDCB2;
     --photo-warm-text: #A9743C;
     --white: #FFFFFF;
@@ -79,7 +80,7 @@
   .rheader__meta { max-width: 1100px; margin-left: auto; margin-right: auto; }
   .rheader__logo {
     width: 52px; height: 52px; border-radius: 14px; flex: 0 0 auto;
-    background: var(--ink); color: #fff;
+    background: var(--photo-warm-a); color: var(--primary);
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: 16px;
   }
@@ -161,15 +162,16 @@
     display: block;
     font-family: "JetBrains Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    font-weight: 500;
-    font-size: 13px;
-    color: var(--ink);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--primary);
   }
   .dish__add {
     flex: 0 0 auto;
-    width: 30px; height: 30px; border-radius: 999px;
-    background: var(--ink); color: #fff; border: none;
-    font-size: 17px; line-height: 1; cursor: pointer;
+    width: 32px; height: 32px; border-radius: 999px;
+    background: var(--primary); color: #fff; border: none;
+    font-size: 18px; line-height: 1; cursor: pointer;
+    box-shadow: 0 4px 10px rgba(232,52,42,0.28);
   }
 
   /* Fiche produit — bandeau photo + feuille arrondie, comme l'ecran app/product/[id].tsx */
@@ -192,34 +194,56 @@
     display: flex; flex-direction: column;
   }
   .overlay.open .productsheet { transform: translateY(0); }
-  .productsheet__photo { position: relative; width: 100%; height: 150px; background: var(--field-bg); flex: 0 0 auto; }
+  .productsheet__photo { position: relative; width: 100%; height: 190px; background: var(--field-bg); flex: 0 0 auto; }
   .productsheet__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .productsheet__close {
     position: absolute; top: 14px; left: 14px;
-    width: 34px; height: 34px; border-radius: 999px;
+    width: 36px; height: 36px; border-radius: 999px;
     background: var(--surface); color: var(--ink);
     border: none; font-size: 18px; line-height: 1;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer; box-shadow: 0 2px 8px rgba(26,26,26,0.15);
   }
-  .productsheet__body { padding: 18px 20px; flex: 1; }
+  .productsheet__grabber {
+    width: 36px; height: 4px; border-radius: 999px;
+    background: var(--border-strong);
+    margin: 10px auto 4px;
+  }
+  .productsheet__body { padding: 14px 20px 18px; flex: 1; }
   .productsheet__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
   .productsheet__head h3 { font-size: 19px; font-weight: 700; margin: 0; text-wrap: balance; }
   .productsheet__price {
     font-family: "JetBrains Mono", ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
-    font-weight: 700; font-size: 16px; color: var(--ink); white-space: nowrap;
+    font-weight: 700; font-size: 18px; color: var(--primary); white-space: nowrap;
   }
   .productsheet__desc { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
   .productsheet__bar {
     flex: 0 0 auto;
-    display: flex; align-items: center; justify-content: flex-end;
+    display: flex; align-items: center; gap: 12px;
     padding: 14px 20px; border-top: 1px solid var(--divider);
   }
+  .productsheet__qty {
+    display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
+    border: 1px solid var(--border-strong); border-radius: 999px; padding: 6px;
+  }
+  .productsheet__qty button {
+    width: 30px; height: 30px; border-radius: 999px; border: none;
+    font-family: "Archivo", sans-serif; font-weight: 700; font-size: 17px; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+  .productsheet__qty .qty-minus { background: var(--surface); color: var(--ink); border: 1px solid var(--border-strong); }
+  .productsheet__qty .qty-plus { background: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(232,52,42,0.28); }
+  .productsheet__qty span {
+    min-width: 16px; text-align: center;
+    font-family: "Archivo", sans-serif; font-weight: 700; font-size: 15px; color: var(--ink);
+  }
   .productsheet__cta {
+    flex: 1;
     background: var(--primary); color: #fff; border: none;
-    font-family: "Archivo", sans-serif; font-weight: 700; font-size: 14px;
-    padding: 13px 22px; border-radius: 999px; cursor: pointer;
+    font-family: "Archivo", sans-serif; font-weight: 700; font-size: 15px;
+    padding: 15px 22px; border-radius: 999px; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(232,52,42,0.28);
   }
 
   footer {
@@ -244,7 +268,7 @@
   <div class="sheet-top">
     <div class="rheader">
       <div class="rheader__top">
-        <div class="rheader__logo">CB</div>
+        <div class="rheader__logo">CT</div>
         <div style="flex:1">
           <p class="rheader__name">Chez Bidul &amp; Truc</p>
           <p class="rheader__sub">Restaurant Bar &amp; Tapas — Dar es Salam</p>
@@ -933,29 +957,54 @@
       <button class="productsheet__close" onclick="closeDish()" aria-label="Fermer">&times;</button>
       <img id="sheetPhoto" src="" alt="" />
     </div>
+    <div class="productsheet__grabber"></div>
     <div class="productsheet__body">
       <div class="productsheet__head">
         <h3 id="sheetName"></h3>
+        <span class="productsheet__price" id="sheetPrice"></span>
       </div>
       <p class="productsheet__desc" id="sheetDesc"></p>
     </div>
     <div class="productsheet__bar">
+      <div class="productsheet__qty">
+        <button class="qty-minus" onclick="changeQty(-1)" aria-label="Retirer">&minus;</button>
+        <span id="sheetQty">1</span>
+        <button class="qty-plus" onclick="changeQty(1)" aria-label="Ajouter">+</button>
+      </div>
       <button class="productsheet__cta" id="sheetCta"></button>
     </div>
   </div>
 </div>
 
 <script>
+  function formatAr(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' Ar'; }
+
+  var sheetBasePrice = 0;
+  var sheetQty = 1;
+
+  function refreshSheetTotals() {
+    document.getElementById('sheetQty').textContent = sheetQty;
+    document.getElementById('sheetCta').textContent = 'Ajouter · ' + formatAr(sheetBasePrice * sheetQty);
+  }
+
+  function changeQty(delta) {
+    sheetQty = Math.max(1, sheetQty + delta);
+    refreshSheetTotals();
+  }
+
   function openDish(el) {
     var img = el.querySelector('.dish__thumb img');
     document.getElementById('sheetPhoto').src = img.src;
     document.getElementById('sheetPhoto').alt = el.dataset.name;
     document.getElementById('sheetName').textContent = el.dataset.name;
+    document.getElementById('sheetPrice').textContent = el.dataset.price;
     var desc = el.dataset.desc || '';
     var descEl = document.getElementById('sheetDesc');
     descEl.textContent = desc;
     descEl.style.display = desc ? 'block' : 'none';
-    document.getElementById('sheetCta').textContent = 'Ajouter — ' + el.dataset.price;
+    sheetBasePrice = parseInt(el.dataset.price.replace(/\D/g, ''), 10) || 0;
+    sheetQty = 1;
+    refreshSheetTotals();
     document.getElementById('overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -988,3 +1037,4 @@
   }, { rootMargin: '-56px 0px -70% 0px', threshold: 0 });
   sections.forEach(function(s) { io.observe(s); });
 </script>
+
