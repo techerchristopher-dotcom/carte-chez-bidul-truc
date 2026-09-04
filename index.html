@@ -965,8 +965,8 @@
     var target = document.getElementById(id);
     if (target) {
       var navH = document.getElementById('catnav').offsetHeight;
-      var top = target.getBoundingClientRect().top + window.pageYOffset - navH - 8;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+      var scrollTarget = target.getBoundingClientRect().top + window.pageYOffset - navH - 8;
+      window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
     }
   }
 
